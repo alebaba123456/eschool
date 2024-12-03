@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+  <div class="background">
+    <div class="login-box">
+      <div class="logo">
+        <img src="logo.jpg" alt="Logo 1" class="logo-small">
+      </div>
+      <h2>LOGIN</h2>
+      <form id="login-form">
+        <div class="input-box">
+          <label for="username">Username *</label>
+          <input type="text" id="username" name="username" placeholder="Username">
+        </div>
+        <div class="input-box">
+          <label for="password">Password *</label>
+          <input type="password" id="password" name="password" placeholder="Password">
+        </div>
+        <button type="submit">LOGIN</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('login-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault(); // Mencegah form submit biasa
+
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  if (!username || !password) {
+    alert('Username dan Password wajib diisi!');
+    return;
+  }
+
+  const loginData = { username, password };
+
+  fetch('http://localhost:3000/login', { // URL server backend
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(loginData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert('Login berhasil!');
+      // Menyimpan token di localStorage untuk autentikasi di dashboard
+      localStorage.setItem('userToken', data.token);
+      window.location.href = 'Dashboard.html';
+    } else {
+      alert('Login gagal: ' + data.message);
+    }
+  })
+  .catch(error => {
+    alert('Terjadi kesalahan: ' + error);
+  });
+});
+
+  </script>
+</body>
+</html>

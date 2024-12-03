@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="Dashboard.css">
+</head>
+<body>
+    <!-- Header dengan menu hamburger dan menu titik 3 -->
+    <header>
+        <!-- Menu Hamburger -->
+        <div class="hamburger" onclick="toggleMenu()">
+            &#9776; <!-- Simbol hamburger -->
+        </div>
+
+        <!-- Menu Titik 3 -->
+        <div class="menu-titik-3" onclick="toggleDropdown()">
+            &#8230; <!-- Simbol titik 3 -->
+        </div>
+
+        <!-- Dropdown Menu Titik 3 -->
+        <div id="dropdown" class="dropdown-content">
+            <a href="#">Profile</a>
+            <a href="#">Setting</a>
+            <a href="#">Logout</a>
+        </div>
+    </header>
+
+    <!-- Sidebar Hamburger Menu -->
+    <div id="sidebar" class="sidebar">
+        <a href="#">Mata Pelajaran</a>
+        <a href="#">Jadwal</a>
+        <a href="#">Tugas</a>
+        <a href="#">Nilai</a>
+    </div>
+
+    <main>
+        <h1>Dashboard</h1>
+        <p>Selamat datang di dashboard!</p>
+    </main>
+
+    <script>
+        if (!localStorage.getItem('userToken')) {
+        window.location.href = 'Login.html';
+        }
+
+        // Fungsi untuk menampilkan atau menyembunyikan sidebar
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+    
+        // Fungsi untuk menampilkan atau menyembunyikan dropdown menu titik 3
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown');
+            dropdown.classList.toggle('show');
+        }
+    
+        // Menutup sidebar ketika klik di luar menu hamburger
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const hamburger = document.querySelector('.hamburger');
+            
+            // Mengecek apakah klik terjadi di luar sidebar dan hamburger
+            if (!hamburger.contains(event.target) && !sidebar.contains(event.target)) {
+                sidebar.classList.remove('active'); // Menyembunyikan sidebar
+            }
+        });
+    </script>
+    
+</body>
+</html>
